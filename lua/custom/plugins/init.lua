@@ -63,7 +63,7 @@ return {
     },
     opts = {
         backend = "ollama",
-        model = "codellama:latest",
+        model = "xwinlm:13b-v0.2-q5_K_M",
     },
   },
 
