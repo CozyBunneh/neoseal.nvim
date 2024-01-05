@@ -542,6 +542,8 @@ require('which-key').register {
   ['<leader>s'] = { name = '[S]erch', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>o'] = { name = '[O]atmeal', _ = 'which_key_ignore' },
+  ['<leader>om'] = { name = '[M] start chat with AI', _ = 'which_key_ignore' },
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
   ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
   ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },

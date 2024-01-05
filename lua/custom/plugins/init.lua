@@ -42,7 +42,7 @@ return {
           sorter = "case_sensitive",
         },
         view = {
-          width = 30,
+          width = 60,
         },
         renderer = {
           group_empty = true,
@@ -52,6 +52,19 @@ return {
         },
       })
     end,
+  },
+
+  -- Oatmeal assuming Ollama is setup and running for local LLMs
+  {
+    "dustinblackman/oatmeal.nvim",
+    cmd = { "Oatmeal" },
+    keys = {
+        { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
+    },
+    opts = {
+        backend = "ollama",
+        model = "codellama:latest",
+    },
   },
 
     -- nvim-metals
