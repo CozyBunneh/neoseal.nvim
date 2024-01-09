@@ -71,6 +71,12 @@ If you would prefer to hide this step and run the plugin sync from the command l
 nvim --headless "+Lazy! sync" +qa
 ```
 
+#### Metals
+
+Remember that you have to install these things separately:
+- Metals
+- Ollama
+
 ### Introduction
 
 To get started, see [Effective Neovim: Instant IDE](https://youtu.be/stqUbv-5u2s), covering the previous version. Note: The install via init.lua is outdated, please follow the install instructions in this file instead. An updated video is coming soon.
