@@ -22,9 +22,8 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("nvim-tree").setup {}
-      vim.api.nvim_set_keymap('n', '<leader>nn', ':NvimTreeToggle<CR>', {noremap = true})
-      vim.api.nvim_set_keymap('n', '<leader>nr', ':NvimTreeRefresh<CR>', {noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>nn', ':NvimTreeToggle<CR>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>nr', ':NvimTreeRefresh<CR>', { noremap = true })
 
       -- disable netrw at the very start of your init.lua
       vim.g.loaded_netrw = 1
@@ -33,10 +32,6 @@ return {
       -- set termguicolors to enable highlight groups
       vim.opt.termguicolors = true
 
-      -- empty setup using defaults
-      require("nvim-tree").setup()
-
-      -- OR setup with some options
       require("nvim-tree").setup({
         sort = {
           sorter = "case_sensitive",
@@ -48,10 +43,40 @@ return {
           group_empty = true,
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
         },
       })
     end,
+  },
+
+  -- Bufferline
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require("bufferline").setup({
+        options = {
+          diagnostics = "nvim_lsp",
+          diagnostics_indicator = function(count, level, diagnostics_dict, context)
+            local s = " "
+            for e, n in pairs(diagnostics_dict) do
+              local sym = e == "error" and " "
+                  or (e == "warning" and " " or "")
+              s = s .. " " .. n .. sym
+            end
+            return s
+          end
+        },
+      })
+    end
+  },
+
+  {
+    "tiagovla/scope.nvim",
+    config = function()
+      require("scope").setup({})
+    end
   },
 
   -- Oatmeal assuming Ollama is setup and running for local LLMs
@@ -59,15 +84,15 @@ return {
     "dustinblackman/oatmeal.nvim",
     cmd = { "Oatmeal" },
     keys = {
-        { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
+      { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
     },
     opts = {
-        backend = "ollama",
-        model = "xwinlm:13b-v0.2-q5_K_M",
+      backend = "ollama",
+      model = "xwinlm:13b-v0.2-q5_K_M",
     },
   },
 
-    -- nvim-metals
+  -- nvim-metals
   {
     "scalameta/nvim-metals",
     name = "metals",
@@ -77,8 +102,8 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { "<leader>cW", function () require('metals').hover_worksheet() end, desc = "Metals Worksheet" },
-      { "<leader>cM", function () require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
+      { "<leader>cW", function() require('metals').hover_worksheet() end,               desc = "Metals Worksheet" },
+      { "<leader>cM", function() require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
     },
     config = function()
       local metals_config = require("metals").bare_config()
