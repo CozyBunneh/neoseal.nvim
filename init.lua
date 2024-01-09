@@ -550,6 +550,7 @@ require('which-key').register {
   ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
   ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },
   ["<leader>ns"] = { ":NvimTreeFindFile<CR>", "Reveal current file in tree" },
+  ["<leader>gl"] = { ":LazyGit<CR>", "Open LazyGit" },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
