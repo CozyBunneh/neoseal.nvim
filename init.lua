@@ -425,10 +425,10 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'scala' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
+    auto_install = true,
 
     highlight = { enable = true },
     indent = { enable = true },
@@ -549,6 +549,7 @@ require('which-key').register {
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
   ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
   ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },
+  ["<leader>ns"] = { ":NvimTreeFindFile<CR>", "Reveal current file in tree" },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
