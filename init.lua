@@ -547,9 +547,10 @@ require('which-key').register {
   ['<leader>o'] = { name = '[O]atmeal', _ = 'which_key_ignore' },
   ['<leader>om'] = { name = '[M] start chat with AI', _ = 'which_key_ignore' },
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
-  ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
-  ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },
-  ["<leader>ns"] = { ":NvimTreeFindFile<CR>", "Reveal current file in tree" },
+  ["<leader>nn"] = { ":Lexplore<CR>", "Toggle File Tree" },
+  -- ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
+  -- ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },
+  -- ["<leader>ns"] = { ":NvimTreeFindFile<CR>", "Reveal current file in tree" },
   ["<leader>gl"] = { ":LazyGit<CR>", "Open LazyGit" },
 }
 -- register which-key VISUAL mode

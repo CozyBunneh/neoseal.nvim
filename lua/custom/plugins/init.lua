@@ -15,62 +15,88 @@ return {
 
   -- File Tree
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
-    lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
+    "prichrd/netrw.nvim",
     config = function()
-      vim.api.nvim_set_keymap('n', '<leader>nn', ':NvimTreeToggle<CR>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>nr', ':NvimTreeRefresh<CR>', { noremap = true })
-
-      -- disable netrw at the very start of your init.lua
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-
-      -- set termguicolors to enable highlight groups
-      vim.opt.termguicolors = true
-
-      require("nvim-tree").setup({
-        sort = {
-          sorter = "case_sensitive",
+      require("netrw").setup({
+        icons = {
+          symlink = '', -- Symlink icon (directory and file)
+          directory = '', -- Directory icon
+          file = '', -- File icon
         },
-        view = {
-          width = 60,
-        },
-        renderer = {
-          group_empty = true,
-        },
-        filters = {
-          dotfiles = false,
-        },
-      })
-    end,
-  },
-
-  -- Bufferline
-  {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      require("bufferline").setup({
-        options = {
-          diagnostics = "nvim_lsp",
-          diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            local s = " "
-            for e, n in pairs(diagnostics_dict) do
-              local sym = e == "error" and " "
-                  or (e == "warning" and " " or "")
-              s = s .. " " .. n .. sym
-            end
-            return s
-          end
-        },
+        use_devicons = true, -- Uses nvim-web-devicons if true, otherwise use the file icon specified above
+        mappings = {
+          -- Function mappings
+          ['p'] = function(payload)
+            -- Payload is an object describing the node under the cursor, the object
+            -- has the following keys:
+            -- - dir: the current netrw directory (vim.b.netrw_curdir)
+            -- - node: the name of the file or directory under the cursor
+            -- - link: the referenced file if the node under the cursor is a symlink
+            -- - extension: the file extension if the node under the cursor is a file
+            -- - type: the type of node under the cursor (0 = dir, 1 = file, 2 = symlink)
+            print(vim.inspect(payload))
+          end,
+        }, -- Custom key mappings
       })
     end
   },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   version = "*",
+  --   lazy = false,
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   config = function()
+  --     vim.api.nvim_set_keymap('n', '<leader>nn', ':NvimTreeToggle<CR>', { noremap = true })
+  --     vim.api.nvim_set_keymap('n', '<leader>nr', ':NvimTreeRefresh<CR>', { noremap = true })
+  --
+  --     -- disable netrw at the very start of your init.lua
+  --     -- vim.g.loaded_netrw = 1
+  --     -- vim.g.loaded_netrwPlugin = 1
+  --
+  --     -- set termguicolors to enable highlight groups
+  --     vim.opt.termguicolors = true
+  --
+  --     require("nvim-tree").setup({
+  --       sort = {
+  --         sorter = "case_sensitive",
+  --       },
+  --       view = {
+  --         width = 60,
+  --       },
+  --       renderer = {
+  --         group_empty = true,
+  --       },
+  --       filters = {
+  --         dotfiles = false,
+  --       },
+  --     })
+  --   end,
+  -- },
+
+  -- Bufferline
+  -- {
+  --   'akinsho/bufferline.nvim',
+  --   version = "*",
+  --   dependencies = 'nvim-tree/nvim-web-devicons',
+  --   config = function()
+  --     require("bufferline").setup({
+  --       options = {
+  --         diagnostics = "nvim_lsp",
+  --         diagnostics_indicator = function(count, level, diagnostics_dict, context)
+  --           local s = " "
+  --           for e, n in pairs(diagnostics_dict) do
+  --             local sym = e == "error" and " "
+  --                 or (e == "warning" and " " or "")
+  --             s = s .. " " .. n .. sym
+  --           end
+  --           return s
+  --         end
+  --       },
+  --     })
+  --   end
+  -- },
 
   {
     "tiagovla/scope.nvim",
