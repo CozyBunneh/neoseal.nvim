@@ -159,30 +159,30 @@ require('lazy').setup({
 
         -- Actions
         -- visual mode
-        map('v', '<leader>hs', function()
+        map('v', '<leader>ghs', function()
           gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'stage git hunk' })
-        map('v', '<leader>hr', function()
+        map('v', '<leader>ghr', function()
           gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
         end, { desc = 'reset git hunk' })
         -- normal mode
-        map('n', '<leader>hs', gs.stage_hunk, { desc = 'git stage hunk' })
-        map('n', '<leader>hr', gs.reset_hunk, { desc = 'git reset hunk' })
-        map('n', '<leader>hS', gs.stage_buffer, { desc = 'git Stage buffer' })
-        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
-        map('n', '<leader>hR', gs.reset_buffer, { desc = 'git Reset buffer' })
-        map('n', '<leader>hp', gs.preview_hunk, { desc = 'preview git hunk' })
-        map('n', '<leader>hb', function()
+        map('n', '<leader>ghs', gs.stage_hunk, { desc = 'git stage hunk' })
+        map('n', '<leader>ghr', gs.reset_hunk, { desc = 'git reset hunk' })
+        map('n', '<leader>ghS', gs.stage_buffer, { desc = 'git Stage buffer' })
+        map('n', '<leader>ghu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
+        map('n', '<leader>ghR', gs.reset_buffer, { desc = 'git Reset buffer' })
+        map('n', '<leader>ghp', gs.preview_hunk, { desc = 'preview git hunk' })
+        map('n', '<leader>ghb', function()
           gs.blame_line { full = false }
         end, { desc = 'git blame line' })
-        map('n', '<leader>hd', gs.diffthis, { desc = 'git diff against index' })
-        map('n', '<leader>hD', function()
+        map('n', '<leader>ghd', gs.diffthis, { desc = 'git diff against index' })
+        map('n', '<leader>ghD', function()
           gs.diffthis '~'
         end, { desc = 'git diff against last commit' })
 
         -- Toggles
-        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
-        map('n', '<leader>td', gs.toggle_deleted, { desc = 'toggle git show deleted' })
+        map('n', '<leader>gtb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
+        map('n', '<leader>gtd', gs.toggle_deleted, { desc = 'toggle git show deleted' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
@@ -519,6 +519,10 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+  -- Better navigation
+  nmap('<C-d>', '<C-d>zz')
+  nmap('<C-u>', '<C-u>zz')
+
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
@@ -539,25 +543,22 @@ require('which-key').register {
   ['<leader>ca'] = { name = '[A]ction', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+  ['<leader>gh'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
+  ['<leader>gt'] = { name = '[T]oggle', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
   ['<leader>o'] = { name = '[O]atmeal', _ = 'which_key_ignore' },
   ['<leader>om'] = { name = '[M] start chat with AI', _ = 'which_key_ignore' },
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
   ["<leader>nn"] = { ":Lexplore<CR>", "Toggle File Tree" },
-  -- ["<leader>nn"] = { ":NvimTreeToggle<CR>", "Toggle File Tree" },
-  -- ["<leader>nr"] = { ":NvimTreeRefresh<CR>", "Refresh File Tree" },
-  -- ["<leader>ns"] = { ":NvimTreeFindFile<CR>", "Reveal current file in tree" },
   ["<leader>gl"] = { ":LazyGit<CR>", "Open LazyGit" },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
 require('which-key').register({
   ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
+  ['<leader>gh'] = { 'Git [H]unk' },
 }, { mode = 'v' })
 
 -- mason-lspconfig requires that these setup functions are called in this order

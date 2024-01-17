@@ -40,68 +40,62 @@ return {
       })
     end
   },
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   version = "*",
-  --   lazy = false,
-  --   dependencies = {
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  --   config = function()
-  --     vim.api.nvim_set_keymap('n', '<leader>nn', ':NvimTreeToggle<CR>', { noremap = true })
-  --     vim.api.nvim_set_keymap('n', '<leader>nr', ':NvimTreeRefresh<CR>', { noremap = true })
-  --
-  --     -- disable netrw at the very start of your init.lua
-  --     -- vim.g.loaded_netrw = 1
-  --     -- vim.g.loaded_netrwPlugin = 1
-  --
-  --     -- set termguicolors to enable highlight groups
-  --     vim.opt.termguicolors = true
-  --
-  --     require("nvim-tree").setup({
-  --       sort = {
-  --         sorter = "case_sensitive",
-  --       },
-  --       view = {
-  --         width = 60,
-  --       },
-  --       renderer = {
-  --         group_empty = true,
-  --       },
-  --       filters = {
-  --         dotfiles = false,
-  --       },
-  --     })
-  --   end,
-  -- },
-
-  -- Bufferline
-  -- {
-  --   'akinsho/bufferline.nvim',
-  --   version = "*",
-  --   dependencies = 'nvim-tree/nvim-web-devicons',
-  --   config = function()
-  --     require("bufferline").setup({
-  --       options = {
-  --         diagnostics = "nvim_lsp",
-  --         diagnostics_indicator = function(count, level, diagnostics_dict, context)
-  --           local s = " "
-  --           for e, n in pairs(diagnostics_dict) do
-  --             local sym = e == "error" and " "
-  --                 or (e == "warning" and " " or "")
-  --             s = s .. " " .. n .. sym
-  --           end
-  --           return s
-  --         end
-  --       },
-  --     })
-  --   end
-  -- },
-
   {
     "tiagovla/scope.nvim",
     config = function()
       require("scope").setup({})
+    end
+  },
+
+  -- better window handling
+  {
+    'declancm/windex.nvim',
+    config = function() require('windex').setup() end
+  },
+
+  -- prettier notifications and stuff
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      {
+        "rcarriga/nvim-notify",
+        opts = {
+          render = "default",           -- default, compact, minimal, simple
+          stages = "fade_in_slide_out", -- fade, fade_in_slide_out, slide, static
+          -- background_colour = "#000000",
+          timeout = 2500,
+          top_down = true,
+        },
+      }
+    },
+    config = function()
+      require("noice").setup({
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+          bottom_search = true,         -- use a classic bottom cmdline for search
+          command_palette = false,      -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false,       -- add a border to hover docs and signature help
+        },
+      })
     end
   },
 
