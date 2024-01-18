@@ -2,6 +2,11 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+
+local api = vim.api
+local cmd = vim.cmd
+local map = vim.keymap.set
+
 return {
   -- Theme
   {
@@ -10,6 +15,22 @@ return {
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'catppuccin-mocha'
+    end,
+  },
+  {
+    "xiyaowong/transparent.nvim",
+    config = function()
+      require("transparent").setup({ -- Optional, you don't have to run setup.
+        groups = {                   -- table: default groups
+          'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
+          'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
+          'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
+          'SignColumn', 'CursorLine', 'CursorLineNr', 'StatusLine', 'StatusLineNC',
+          'EndOfBuffer',
+        },
+        extra_groups = {},   -- table: additional groups that should be cleared
+        exclude_groups = {}, -- table: groups you don't want to clear
+      })
     end,
   },
 
@@ -71,7 +92,7 @@ return {
         opts = {
           render = "default",           -- default, compact, minimal, simple
           stages = "fade_in_slide_out", -- fade, fade_in_slide_out, slide, static
-          -- background_colour = "#000000",
+          background_colour = "#000000",
           timeout = 2500,
           top_down = true,
         },
@@ -181,38 +202,140 @@ return {
   },
 
   -- nvim-metals
+  -- {
+  --   'scalameta/nvim-metals',
+  --   ft = { 'scala', 'sbt' },
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
+  --   config = function()
+  --     local metals_config = require('metals').bare_config()
+  --     metals_config.init_options.statusBarProvider = 'on'
+  --     metals_config.settings = {
+  --       showImplicitArguments = true,
+  --       excludedPackages = { 'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl' },
+  --     }
+  --     metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
+  --     metals_config.on_attach = function(_, _)
+  --       require('metals').setup_dap()
+  --     end
+  --
+  --     local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
+  --     vim.api.nvim_create_autocmd('FileType', {
+  --       pattern = { 'scala', 'sbt', 'java' },
+  --       callback = function()
+  --         require('metals').initialize_or_attach(metals_config)
+  --       end,
+  --       group = nvim_metals_group,
+  --     })
+  --
+  --     -- Debug settings
+  --     local dap = require('dap')
+  --     dap.configurations.scala = {
+  --       {
+  --         type = 'scala',
+  --         request = 'launch',
+  --         name = 'Run or test',
+  --         metals = {
+  --           runType = 'runOrTestFile',
+  --         },
+  --       },
+  --       {
+  --         type = 'scala',
+  --         request = 'launch',
+  --         name = 'Test build target',
+  --         metals = {
+  --           runType = 'testTarget',
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
   {
     "scalameta/nvim-metals",
-    name = "metals",
-    ft = { "scala", "sbt", "java" },
     dependencies = {
       "nvim-lua/plenary.nvim",
+      {
+        "mfussenegger/nvim-dap",
+        config = function(self, opts)
+          -- Debug settings if you're using nvim-dap
+          local dap = require("dap")
+
+          dap.configurations.scala = {
+            {
+              type = "scala",
+              request = "launch",
+              name = "RunOrTest",
+              metals = {
+                runType = "runOrTestFile",
+                --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+              },
+            },
+            {
+              type = "scala",
+              request = "launch",
+              name = "Test Target",
+              metals = {
+                runType = "testTarget",
+              },
+            },
+          }
+        end
+      },
     },
-    -- stylua: ignore
-    keys = {
-      { "<leader>cW", function() require('metals').hover_worksheet() end,               desc = "Metals Worksheet" },
-      { "<leader>cM", function() require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
-    },
-    config = function()
+    ft = { "scala", "sbt", "java" },
+    opts = function()
       local metals_config = require("metals").bare_config()
-
-      metals_config.settings = {
-        showImplicitArguments = true,
-        showImplicitConversionsAndClasses = true,
-        showInferredType = true,
-        superMethodLensesEnabled = true,
-      }
-      metals_config.init_options.statusBarProvider = "on"
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+      metals_config.on_attach = function(client, bufnr)
+        map("n", "<leader>ws", function()
+          require("metals").hover_worksheet()
+        end)
+      end
 
+      return metals_config
+    end,
+    config = function(self, metals_config)
       local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "scala", "sbt", "java" },
+        pattern = self.ft,
         callback = function()
           require("metals").initialize_or_attach(metals_config)
         end,
         group = nvim_metals_group,
       })
-    end,
+    end
   }
+  -- {
+  --   "scalameta/nvim-metals",
+  --   name = "metals",
+  --   ft = { "scala", "sbt", "java" },
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<leader>cW", function() require('metals').hover_worksheet() end,               desc = "Metals Worksheet" },
+  --     { "<leader>cM", function() require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
+  --   },
+  --   config = function()
+  --     local metals_config = require("metals").bare_config()
+  --
+  --     metals_config.settings = {
+  --       showImplicitArguments = true,
+  --       showImplicitConversionsAndClasses = true,
+  --       showInferredType = true,
+  --       superMethodLensesEnabled = true,
+  --     }
+  --     metals_config.init_options.statusBarProvider = "on"
+  --     metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+  --
+  --     local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       pattern = { "scala", "sbt", "java" },
+  --       callback = function()
+  --         require("metals").initialize_or_attach(metals_config)
+  --       end,
+  --       group = nvim_metals_group,
+  --     })
+  --   end,
+  -- }
 }
