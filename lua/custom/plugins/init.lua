@@ -8,6 +8,10 @@ local cmd = vim.cmd
 local map = vim.keymap.set
 
 return {
+  {
+    'weilbith/nvim-code-action-menu',
+    cmd = 'CodeActionMenu',
+  },
   -- Theme
   {
     "catppuccin/nvim",
@@ -252,34 +256,7 @@ return {
   {
     "scalameta/nvim-metals",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "mfussenegger/nvim-dap",
-        config = function(self, opts)
-          -- Debug settings if you're using nvim-dap
-          local dap = require("dap")
-
-          dap.configurations.scala = {
-            {
-              type = "scala",
-              request = "launch",
-              name = "RunOrTest",
-              metals = {
-                runType = "runOrTestFile",
-                --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
-              },
-            },
-            {
-              type = "scala",
-              request = "launch",
-              name = "Test Target",
-              metals = {
-                runType = "testTarget",
-              },
-            },
-          }
-        end
-      },
+      "nvim-lua/plenary.nvim"
     },
     ft = { "scala", "sbt", "java" },
     opts = function()
