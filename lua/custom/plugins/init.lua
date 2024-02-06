@@ -79,50 +79,50 @@ return {
   },
 
   -- prettier notifications and stuff
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      {
-        "rcarriga/nvim-notify",
-        opts = {
-          render = "default",           -- default, compact, minimal, simple
-          stages = "fade_in_slide_out", -- fade, fade_in_slide_out, slide, static
-          background_colour = "#000000",
-          timeout = 2500,
-          top_down = true,
-        },
-      }
-    },
-    config = function()
-      require("noice").setup({
-        lsp = {
-          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-          },
-        },
-        -- you can enable a preset for easier configuration
-        presets = {
-          bottom_search = true,         -- use a classic bottom cmdline for search
-          command_palette = false,      -- position the cmdline and popupmenu together
-          long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = false,       -- add a border to hover docs and signature help
-        },
-      })
-    end
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     -- add any options here
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     {
+  --       "rcarriga/nvim-notify",
+  --       opts = {
+  --         render = "default",           -- default, compact, minimal, simple
+  --         stages = "fade_in_slide_out", -- fade, fade_in_slide_out, slide, static
+  --         background_colour = "#000000",
+  --         timeout = 2500,
+  --         top_down = true,
+  --       },
+  --     }
+  --   },
+  --   config = function()
+  --     require("noice").setup({
+  --       lsp = {
+  --         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --         override = {
+  --           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --           ["vim.lsp.util.stylize_markdown"] = true,
+  --           ["cmp.entry.get_documentation"] = true,
+  --         },
+  --       },
+  --       -- you can enable a preset for easier configuration
+  --       presets = {
+  --         bottom_search = true,         -- use a classic bottom cmdline for search
+  --         command_palette = false,      -- position the cmdline and popupmenu together
+  --         long_message_to_split = true, -- long messages will be sent to a split
+  --         inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+  --         lsp_doc_border = false,       -- add a border to hover docs and signature help
+  --       },
+  --     })
+  --   end
+  -- },
 
   -- Oatmeal assuming Ollama is setup and running for local LLMs
   {
@@ -167,7 +167,7 @@ return {
 
         -- Table of lsp clients to ignore by name
         -- eg: { "efm", ... }
-        ignore_lsp = { "metals" },
+        -- ignore_lsp = { "metals" },
 
         -- Don't calculate root dir on specific directories
         -- Ex: { "~/.cargo/*", ... }
@@ -205,64 +205,59 @@ return {
     end
   },
 
-  -- nvim-metals
-  -- {
-  --   'scalameta/nvim-metals',
-  --   ft = { 'scala', 'sbt' },
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
-  --   config = function()
-  --     local metals_config = require('metals').bare_config()
-  --     metals_config.init_options.statusBarProvider = 'on'
-  --     metals_config.settings = {
-  --       showImplicitArguments = true,
-  --       excludedPackages = { 'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl' },
-  --     }
-  --     metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
-  --     metals_config.on_attach = function(_, _)
-  --       require('metals').setup_dap()
-  --     end
-  --
-  --     local nvim_metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
-  --     vim.api.nvim_create_autocmd('FileType', {
-  --       pattern = { 'scala', 'sbt', 'java' },
-  --       callback = function()
-  --         require('metals').initialize_or_attach(metals_config)
-  --       end,
-  --       group = nvim_metals_group,
-  --     })
-  --
-  --     -- Debug settings
-  --     local dap = require('dap')
-  --     dap.configurations.scala = {
-  --       {
-  --         type = 'scala',
-  --         request = 'launch',
-  --         name = 'Run or test',
-  --         metals = {
-  --           runType = 'runOrTestFile',
-  --         },
-  --       },
-  --       {
-  --         type = 'scala',
-  --         request = 'launch',
-  --         name = 'Test build target',
-  --         metals = {
-  --           runType = 'testTarget',
-  --         },
-  --       },
-  --     }
-  --   end,
-  -- },
+  -- scala
   {
     "scalameta/nvim-metals",
     dependencies = {
       "nvim-lua/plenary.nvim"
+      --   {
+      --     "mfussenegger/nvim-dap",
+      --     config = function(self, opts)
+      --       -- Debug settings if you're using nvim-dap
+      --       local dap = require("dap")
+      --
+      --       dap.configurations.scala = {
+      --         {
+      --           type = "scala",
+      --           request = "launch",
+      --           name = "RunOrTest",
+      --           metals = {
+      --             runType = "runOrTestFile",
+      --             --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+      --           },
+      --         },
+      --         {
+      --           type = "scala",
+      --           request = "launch",
+      --           name = "Test Target",
+      --           metals = {
+      --             runType = "testTarget",
+      --           },
+      --         },
+      --       }
+      --     end
+      --   },
     },
-    ft = { "scala", "sbt", "java" },
+    ft = { "gradle.properties", "scala", "sbt", "java" },
     opts = function()
       local metals_config = require("metals").bare_config()
+      metals_config.settings = {
+        showImplicitArguments = true,
+        showImplicitConversionsAndClasses = true,
+        showInferredType = true,
+        superMethodLensesEnabled = true,
+        bloopJvmProperties = { "-Xmx4G" },
+        ammoniteJvmProperties = { "-Xmx1G" },
+        fallbackScalaVersion = "2.11.12",
+      }
+      -- metals_config.root_patterns = { "build.sbt", "build.sc", "build.gradle", "pom.xml", ".scala-build", "bleep.yaml", ".git" }
+      metals_config.root_patterns = { "build.sbt", "build.sc", "gradle.properties", "pom.xml", ".scala-build",
+        "bleep.yaml", ".git" }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       metals_config.on_attach = function(client, bufnr)
+        vim.keymap.set('n', '<leader>cs', function()
+          require('telescope').extensions.metals.commands()
+        end, { silent = true, buffer = bufnr, desc = 'Scala: Commands' })
         map("n", "<leader>ws", function()
           require("metals").hover_worksheet()
         end)
@@ -281,38 +276,4 @@ return {
       })
     end
   }
-  -- {
-  --   "scalameta/nvim-metals",
-  --   name = "metals",
-  --   ft = { "scala", "sbt", "java" },
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --   },
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<leader>cW", function() require('metals').hover_worksheet() end,               desc = "Metals Worksheet" },
-  --     { "<leader>cM", function() require('telescope').extensions.metals.commands() end, desc = "Telescope Metals Commands" },
-  --   },
-  --   config = function()
-  --     local metals_config = require("metals").bare_config()
-  --
-  --     metals_config.settings = {
-  --       showImplicitArguments = true,
-  --       showImplicitConversionsAndClasses = true,
-  --       showInferredType = true,
-  --       superMethodLensesEnabled = true,
-  --     }
-  --     metals_config.init_options.statusBarProvider = "on"
-  --     metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-  --
-  --     local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-  --     vim.api.nvim_create_autocmd("FileType", {
-  --       pattern = { "scala", "sbt", "java" },
-  --       callback = function()
-  --         require("metals").initialize_or_attach(metals_config)
-  --       end,
-  --       group = nvim_metals_group,
-  --     })
-  --   end,
-  -- }
 }
