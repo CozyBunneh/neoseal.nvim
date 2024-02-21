@@ -550,6 +550,7 @@ require('which-key').register {
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
   ["<leader>nn"] = { ":Lexplore<CR>", "Toggle File Tree" },
   ["<leader>gl"] = { ":LazyGit<CR>", "Open LazyGit" },
+  ["<leader>h"] = { "[H]arpoon", _ = 'which_key_ignore' },
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>hs (hunk stage) to work
