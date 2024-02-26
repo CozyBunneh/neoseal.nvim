@@ -12,6 +12,13 @@ return {
     'weilbith/nvim-code-action-menu',
     cmd = 'CodeActionMenu',
   },
+  {
+    'ntpeters/vim-better-whitespace',
+    config = function()
+      vim.g.better_whitespace_enabled = 1
+      vim.g.strip_whitespace_on_save = 1
+    end
+  },
   -- Theme
   {
     "catppuccin/nvim",
@@ -50,8 +57,8 @@ return {
       harpoon:setup()
       -- REQUIRED
 
-      map("n", "<leader>ha", function() harpoon:list():append() end, { desc = 'Harpoon Add' })
-      map("n", "<leader>he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = 'Harpoon List' })
+      map("n", "<C-a>", function() harpoon:list():append() end, { desc = 'Harpoon Add' })
+      map("n", "<C-l>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = 'Harpoon List' })
 
       map("n", "<leader>hh", function() harpoon:list():select(1) end, { desc = 'Harpoon First' })
       map("n", "<leader>hj", function() harpoon:list():select(2) end, { desc = 'Harpoon Second' })
@@ -59,8 +66,8 @@ return {
       map("n", "<leader>hl", function() harpoon:list():select(4) end, { desc = 'Harpoon Fourth' })
 
       -- Toggle previous & next buffers stored within Harpoon list
-      map("n", "<leader>hp", function() harpoon:list():prev() end, { desc = 'Harpoon Previous' })
-      map("n", "<leader>hn", function() harpoon:list():next() end, { desc = 'Harpoon Next' })
+      map("n", "<C-,>", function() harpoon:list():prev() end, { desc = 'Harpoon Previous' })
+      map("n", "<C-.>", function() harpoon:list():next() end, { desc = 'Harpoon Next' })
     end
   },
 
