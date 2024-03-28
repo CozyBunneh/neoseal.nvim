@@ -548,7 +548,7 @@ require('which-key').register {
   ['<leader>o'] = { name = '[O]atmeal', _ = 'which_key_ignore' },
   ['<leader>om'] = { name = '[M] start chat with AI', _ = 'which_key_ignore' },
   ['<leader>n'] = { name = '[N]vimTree', _ = 'which_key_ignore' },
-  ["<leader>nn"] = { ":Lexplore<CR>", "Toggle File Tree" },
+  -- ["<leader>nn"] = { ":Lexplore<CR>", "Toggle File Tree" },
   ["<leader>gl"] = { ":LazyGit<CR>", "Open LazyGit" },
   ["<leader>h"] = { "[H]arpoon", _ = 'which_key_ignore' },
 }
