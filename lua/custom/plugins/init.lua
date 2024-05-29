@@ -122,7 +122,7 @@ return {
           sorter = "case_sensitive",
         },
         view = {
-          width = 30,
+          width = 60,
         },
         renderer = {
           group_empty = true,
@@ -327,7 +327,7 @@ return {
         end, { silent = true, buffer = bufnr, desc = 'Scala: Commands' })
 
         -- LSP mappings
-        map("n", "gD", vim.lsp.buf.definition)
+        map("n", "gd", vim.lsp.buf.definition)
         map("n", "K", vim.lsp.buf.hover)
         map("n", "gi", vim.lsp.buf.implementation)
         map("n", "gr", vim.lsp.buf.references)
