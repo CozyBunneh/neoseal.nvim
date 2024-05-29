@@ -329,6 +329,7 @@ return {
         -- LSP mappings
         map("n", "gd", vim.lsp.buf.definition)
         map("n", "K", vim.lsp.buf.hover)
+        map("n", "<leader>k", vim.lsp.buf.hover)
         map("n", "gi", vim.lsp.buf.implementation)
         map("n", "gr", vim.lsp.buf.references)
         map("n", "gds", vim.lsp.buf.document_symbol)
